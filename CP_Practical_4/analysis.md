@@ -43,7 +43,7 @@ Boruvka's algorithm is the most visual and intuitive. We start with every vertex
 
 What I found clever is that because every phase at least **halves** the number of
 components, the algorithm only needs O(log V) phases. It does not process one edge at a
-time like Kruskal's — it processes many edges simultaneously, which is why it works
+time like Kruskal's - it processes many edges simultaneously, which is why it works
 well in parallel systems.
 
 Using Union-Find to track which vertices belong to the same component was a new concept
@@ -62,5 +62,5 @@ All three algorithms solve graph problems, but each fits a different situation:
 | Boruvka's      | MST             | Parallel / large graphs   |
 
 The biggest lesson was that there is no single "best" algorithm the right choice
-depends on the size of the graph, whether negative weights exist, and whether you need
+depends on the size of the graph, whether negative weights exist, and whether we need
 shortest paths or a spanning tree.
