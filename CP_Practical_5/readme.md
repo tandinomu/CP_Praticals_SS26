@@ -5,56 +5,53 @@
 **Image:**  
 ![Problem 1](image/q1.png)
 
-**Brief Restatement:**  
-We are given n force vectors in 3D space. The body starts at (0,0,0). We need to check if the sum of all vectors is (0,0,0). If yes → "YES", else → "NO".
+### 1. Understanding the Question
 
-**Solution Approach:**  
-- Read n (number of forces)  
-- Initialize three sum variables: sumX = 0, sumY = 0, sumZ = 0  
-- For each force, read (x, y, z) and add to respective sums  
-- After all forces, check if all three sums are zero  
-- Print "YES" if all zero, otherwise "NO"
+**What is given?**  
+We are given n force vectors in 3D space. Each force has three components (x, y, z).
 
-**Code Snippet:**  
-```cpp
-int sum_x = 0, sum_y = 0, sum_z = 0;
-for (int i = 0; i < n; i++) {
-    cin >> x >> y >> z;
-    sum_x += x; sum_y += y; sum_z += z;
-}
-if (sum_x == 0 && sum_y == 0 && sum_z == 0) cout << "YES";
-else cout << "NO";
-```
+**What do these represent?**  
+The body starts at position (0, 0, 0). Each force vector pushes the body in some direction.
 
----
+**What is being asked?**  
+We need to check if the body is in equilibrium (not moving).  
+A body is in equilibrium when the **sum of all forces** is (0, 0, 0).
 
-## Problem 2: (Not Available)
+**Example from problem:**  
+Input:
+3
+4 1 7
+-2 4 -1
+1 -5 -3
 
----
+Sum = (4-2+1, 1+4-5, 7-1-3) = (3, 0, 3) → Not zero → "NO"
 
-## Problem 3: Beautiful Year
 
-**Image:**  
-![Problem 3](image/q3.png)
+### 2. Solution Approach
 
-**Brief Restatement:**  
-Given a year, find the next year where all 4 digits are different from each other.
+Let:
+\[
+S_x = \sum_{i=1}^{n} x_i,\quad S_y = \sum_{i=1}^{n} y_i,\quad S_z = \sum_{i=1}^{n} z_i
+\]
 
-**Solution Approach:**  
-- Loop from y+1 upward  
-- Extract all 4 digits into a set  
-- If set.size() == 4 → all digits unique → print year and stop
+**Step 1:** Initialize sums to zero  
+\[
+S_x = 0,\quad S_y = 0,\quad S_z = 0
+\]
 
-**Code Snippet:**  
-```cpp
-for (int year = y+1; ; year++) {
-    string s = to_string(year);
-    set<char> digits(s.begin(), s.end());
-    if (digits.size() == 4) {
-        cout << year; break;
-    }
-}
-```
+**Step 2:** For each force vector (x, y, z):  
+\[
+S_x = S_x + x,\quad S_y = S_y + y,\quad S_z = S_z + z
+\]
+
+**Step 3:** Check equilibrium condition  
+If \( S_x = 0 \) and \( S_y = 0 \) and \( S_z = 0 \) → "YES" else "NO"
+
+
+### 3. Time & Space Complexity
+
+- **Time Complexity:** O(n) — we process each of the n forces once
+- **Space Complexity:** O(1) — only three sum variables
 
 ---
 
@@ -63,66 +60,53 @@ for (int year = y+1; ; year++) {
 **Image:**  
 ![Problem 4](image/q4.png)
 
-**Brief Restatement:**  
-Count digits that are 4 or 7. If that count consists only of digits 4 and 7 → "YES", else "NO".
+### 1. Understanding the Question
 
-**Solution Approach:**  
-- Read n as string  
-- Count digits '4' and '7'  
-- Convert count to string  
-- Check if all digits of count are '4' or '7'
+**What is given?**  
+We are given an integer n (1 ≤ n ≤ 10^18).
 
-**Code Snippet:**  
-```cpp
-int count = 0;
-for (char c : n) if (c == '4' || c == '7') count++;
-string cntStr = to_string(count);
-bool lucky = true;
-for (char c : cntStr) if (c != '4' && c != '7') lucky = false;
-cout << (lucky ? "YES" : "NO");
-```
+**What is a lucky digit?**  
+Digits 4 and 7 are called lucky digits.
 
----
+**What is a lucky number?**  
+A number whose digits are all 4 or 7.
 
-## Problem 5: XOR Strings
+**What is a nearly lucky number?**  
+A number is nearly lucky if the **count of lucky digits** in it is itself a lucky number.
 
-**Image:**  
-![Problem 5](image/q5.png)
+**Example from problem:**  
+Input: `40047`  
+Lucky digits: 4, 4, 7 → count = 3 → 3 is not lucky → "NO"
 
-**Brief Restatement:**  
-Given two binary strings of equal length, output '1' where digits differ, '0' where same.
+Input: `7747774`  
+Lucky digits: all 7 digits are lucky → count = 7 → 7 is lucky → "YES"
 
-**Solution Approach:**  
-- XOR works directly on chars  
-- Loop and apply XOR
 
-**Code Snippet:**  
-```cpp
-for (int i = 0; i < a.length(); i++) {
-    cout << ((a[i] ^ b[i]) ? '1' : '0');
-}
-```
 
----
+### 2. Solution Approach
 
-## Problem 6: Dragons
+Let:
+- \( n \) = given number as string
+- \( c \) = count of digits that are '4' or '7'
 
-**Image:**  
-![Problem 6](image/q6.png)
+**Step 1:** Count lucky digits  
+\[
+c = \sum_{i=1}^{len(n)} [n[i] == '4' \text{ or } n[i] == '7']
+\]
 
-**Brief Restatement:**  
-Count numbers from 1 to d divisible by at least one of k, l, m, or n.
+**Step 2:** Check if \( c \) is a lucky number  
+Convert \( c \) to string. For each digit \( d \) in \( c \):
+- If \( d \neq 4 \) and \( d \neq 7 \) → not lucky
 
-**Solution Approach:**  
-- Use Inclusion-Exclusion Principle with LCM
+**Step 3:** Output  
+If \( c \) is lucky → "YES" else "NO"
 
-**Code Snippet:**  
-```cpp
-int total = d/k + d/l + d/m + d/n;
-total -= d/lcm(k,l) + d/lcm(k,m) + d/lcm(k,n) + d/lcm(l,m) + d/lcm(l,n) + d/lcm(m,n);
-total += d/lcm(k,l,m) + d/lcm(k,l,n) + d/lcm(k,m,n) + d/lcm(l,m,n);
-total -= d/lcm(k,l,m,n);
-```
+
+
+### 3. Time & Space Complexity
+
+- **Time Complexity:** O(len(n)) — where len(n) ≤ 19 digits
+- **Space Complexity:** O(1) — only a few variables
 
 ---
 
@@ -131,71 +115,50 @@ total -= d/lcm(k,l,m,n);
 **Image:**  
 ![Problem 7](image/q7.png)
 
-**Brief Restatement:**  
-Count distinct characters in username. If count even → "CHAT WITH HER!" (female), odd → "IGNORE HIM!" (male).
+### 1. Understanding the Question
 
-**Solution Approach:**  
-- Use set to store unique characters  
-- Check size % 2
+**What is given?**  
+A username string containing only lowercase English letters (length ≤ 100).
 
-**Code Snippet:**  
-```cpp
-set<char> distinct(username.begin(), username.end());
-if (distinct.size() % 2 == 0) cout << "CHAT WITH HER!";
-else cout << "IGNORE HIM!";
-```
+**What is the method?**  
+Count the number of **distinct characters** in the username:
+- If count is **odd** → Male → "IGNORE HIM!"
+- If count is **even** → Female → "CHAT WITH HER!"
 
----
+**Example from problem:**  
+Input: `wjmzbmr`  
+Distinct characters: w, j, m, z, b, r → count = 6 (even) → "CHAT WITH HER!"
 
-## Problem 8: Effective Approach
+Input: `xiaodao`  
+Distinct characters: x, i, a, o, d → count = 5 (odd) → "IGNORE HIM!"
 
-**Image:**  
-![Problem 8](image/q8.png)
 
-**Brief Restatement:**  
-Given array (permutation 1..n) and queries. Count total comparisons for Vasya (search from start) and Petya (search from end). Determine who wins.
 
-**Solution Approach:**  
-- Map each value to its position (1-based)  
-- For each query b: Vasya = pos[b], Petya = n - pos[b] + 1  
-- Sum and compare
+### 2. Solution Approach
 
-**Code Snippet:**  
-```cpp
-int pos[100005];
-for (int i = 1; i <= n; i++) { cin >> x; pos[x] = i; }
-long long vasya = 0, petya = 0;
-while (m--) { cin >> b; vasya += pos[b]; petya += n - pos[b] + 1; }
-if (vasya < petya) cout << "Vasya";
-else if (petya < vasya) cout << "Petya";
-else cout << "Sasha";
-```
+Let:
+- \( S \) = set of characters in username
+- \( d = |S| \) = number of distinct characters
 
----
+**Step 1:** Extract distinct characters  
+\[
+S = \{ \text{unique characters in username} \}
+\]
 
-## Problem 9: Dima and Friends
+**Step 2:** Count distinct characters  
+\[
+d = \text{size of } S
+\]
 
-**Image:**  
-![Problem 9](image/q9.png)
+**Step 3:** Determine gender  
+If \( d \% 2 == 0 \) → Female → "CHAT WITH HER!"  
+Else → Male → "IGNORE HIM!"
 
-**Brief Restatement:**  
-Count how many values (1–5) Dima can show so the countdown doesn't land on him (position 1).
 
-**Solution Approach:**  
-- Sum all friends' fingers  
-- Try each of Dima's 5 choices  
-- If (total + choice) % (n+1) != 1 → safe
+### 3. Time & Space Complexity
 
-**Code Snippet:**  
-```cpp
-int total = 0;
-for (int i = 0; i < n; i++) { cin >> x; total += x; }
-int safe = 0;
-for (int dima = 1; dima <= 5; dima++) {
-    if ((total + dima) % (n+1) != 1) safe++;
-}
-cout << safe;
-```
+- **Time Complexity:** O(n) — where n is length of username (≤ 100)
+- **Space Complexity:** O(1) — set stores at most 26 lowercase letters
 
 ---
 
@@ -204,81 +167,65 @@ cout << safe;
 **Image:**  
 ![Problem 10](image/q10.png)
 
-**Brief Restatement:**  
-Find last child to leave when each child needs a[i] candies, given m per turn. Child goes to back if still needs more.
+### 1. Understanding the Question
 
-**Solution Approach:**  
-- Direct method: rounds = ceil(a[i]/m)  
-- Child with max rounds leaves last (rightmost if tie)
+**What is given?**  
+- n children in a line, numbered 1 to n  
+- Each child i wants at least a[i] candies  
+- Jzzhu gives m candies to the first child in line each time
 
-**Code Snippet:**  
-```cpp
-int last = 0, maxRounds = -1;
-for (int i = 1; i <= n; i++) {
-    int rounds = (a[i] + m - 1) / m;
-    if (rounds >= maxRounds) {
-        maxRounds = rounds;
-        last = i;
-    }
-}
-cout << last;
-```
+**What is the process?**  
+1. Give m candies to first child in line  
+2. If child now has enough (≥ a[i]), they leave  
+3. If not enough, child goes to back of line  
+4. Repeat until line is empty
 
----
+**What is being asked?**  
+Find the **index** (1-based) of the **last child** who leaves.
 
-## Problem 11: Supercentral Point
+**Example from problem:**  
+Input:
+5 2
+1 3 1 4 2
 
-**Image:**  
-![Problem 11](image/q11.png)
+Output: `4`
 
-**Brief Restatement:**  
-A point is supercentral if it has neighbors in all four directions (up, down, left, right).
 
-**Solution Approach:**  
-- For each point, check all others for each direction
+### 2. Solution Approach
 
-**Code Snippet:**  
-```cpp
-int count = 0;
-for (int i = 0; i < n; i++) {
-    bool left = false, right = false, up = false, down = false;
-    for (int j = 0; j < n; j++) {
-        if (points[j].x < points[i].x && points[j].y == points[i].y) left = true;
-        if (points[j].x > points[i].x && points[j].y == points[i].y) right = true;
-        if (points[j].y > points[i].y && points[j].x == points[i].x) up = true;
-        if (points[j].y < points[i].y && points[j].x == points[i].x) down = true;
-    }
-    if (left && right && up && down) count++;
-}
-cout << count;
-```
+Let:
+- \( a[i] \) = candies needed by child i
+- \( m \) = candies given per turn
 
----
+**Step 1:** Calculate rounds needed for each child  
+Each child receives m candies each time they reach the front.  
+Number of rounds needed:
+\[
+\text{rounds}[i] = \lceil \frac{a[i]}{m} \rceil
+\]
+Using integer arithmetic:
+\[
+\text{rounds}[i] = \frac{a[i] + m - 1}{m}
+\]
 
-## Problem 12: Petr and Book
+**Step 2:** Find child with maximum rounds  
+\[
+\text{maxRounds} = \max(\text{rounds}[1], \text{rounds}[2], ..., \text{rounds}[n])
+\]
 
-**Image:**  
-![Problem 12](image/q12.png)
+**Step 3:** Handle ties  
+If multiple children have the same maxRounds, the **rightmost** one (largest index) leaves last.
 
-**Brief Restatement:**  
-Given n pages and daily capacities for 7 days (Monday to Sunday), find which day he finishes reading.
+**Formula:**
+\[
+\text{answer} = \max_{i} \{ i \mid \text{rounds}[i] = \text{maxRounds} \}
+\]
 
-**Solution Approach:**  
-- Loop day by day, subtract capacity from n  
-- Use modulo to cycle days  
-- Stop when n ≤ 0
 
-**Code Snippet:**  
-```cpp
-int pages[7];
-for (int i = 0; i < 7; i++) cin >> pages[i];
-int day = 0;
-while (n > 0) {
-    n -= pages[day % 7];
-    day++;
-}
-cout << ((day - 1) % 7) + 1;
-```
+### 3. Time & Space Complexity
+
+- **Time Complexity:** O(n) — we process each child once
+- **Space Complexity:** O(1) — only a few variables
 
 ---
 
@@ -287,236 +234,73 @@ cout << ((day - 1) % 7) + 1;
 **Image:**  
 ![Problem 13](image/q13.png)
 
-**Brief Restatement:**  
-Given areas of three faces sharing a vertex (S1, S2, S3), find sum of all 12 edges = 4(x+y+z).
+### 1. Understanding the Question
 
-**Solution Approach:**  
-- x = √(S1·S3/S2), y = √(S1·S2/S3), z = √(S2·S3/S1)
+**What is given?**  
+We are given the areas of three faces of a rectangular box (parallelepiped) that all meet at one corner.
 
-**Code Snippet:**  
-```cpp
-int x = sqrt(S1 * S3 / S2);
-int y = sqrt(S1 * S2 / S3);
-int z = sqrt(S2 * S3 / S1);
-cout << 4 * (x + y + z);
-```
+**What do these areas represent?**  
+If the edge lengths of the box are \( x \), \( y \), and \( z \), then:
 
----
+- Face 1 area = \( x \times y \)
+- Face 2 area = \( y \times z \)
+- Face 3 area = \( z \times x \)
 
-## Problem 14: Reconnaissance 2
+**What is being asked?**  
+We need to find the sum of all 12 edges of the box.
 
-**Image:**  
-![Problem 14](image/q14.png)
+Total sum = \( 4x + 4y + 4z = 4(x + y + z) \)
 
-**Brief Restatement:**  
-Find neighboring soldiers (in circle) with smallest height difference.
+**Example from problem:**  
+Input: `1 1 1` → edges are \( 1 \times 1 \times 1 \) → sum = \( 4(1+1+1) = 12 \)
 
-**Solution Approach:**  
-- Check adjacent pairs including (last, first)  
-- Track min difference and indices
+Input: `4 6 6` → edges are \( 2 \times 2 \times 3 \) → sum = \( 4(2+2+3) = 28 \)
 
-**Code Snippet:**  
-```cpp
-int minDiff = abs(h[0] - h[n-1]), pos1 = n, pos2 = 1;
-for (int i = 0; i < n-1; i++) {
-    int diff = abs(h[i] - h[i+1]);
-    if (diff < minDiff) {
-        minDiff = diff;
-        pos1 = i+1; pos2 = i+2;
-    }
-}
-cout << pos1 << " " << pos2;
-```
 
----
+### 2. Solution Approach
 
-## Problem 15: Little Elephant and Rozdil
+We are given:
+\[
+S1 = x \times y,\quad S2 = y \times z,\quad S3 = z \times x
+\]
 
-**Image:**  
-![Problem 15](image/q15.png)
+**Step 1:** Multiply all three equations
+\[
+(xy) \times (yz) \times (zx) = S1 \times S2 \times S3
+\]
+\[
+x^2 y^2 z^2 = S1 \times S2 \times S3
+\]
 
-**Brief Restatement:**  
-Find index of unique minimum travel time. If multiple minima → "Still Rozdil".
+**Step 2:** Take square root
+\[
+xyz = \sqrt{S1 \times S2 \times S3}
+\]
 
-**Solution Approach:**  
-- Single pass: track min, min_index, duplicate flag
+**Step 3:** Solve for each edge
 
-**Code Snippet:**  
-```cpp
-int minVal = 1e9, minIndex = -1;
-bool duplicate = false;
-for (int i = 1; i <= n; i++) {
-    int t; cin >> t;
-    if (t < minVal) {
-        minVal = t; minIndex = i; duplicate = false;
-    } else if (t == minVal) {
-        duplicate = true;
-    }
-}
-if (duplicate) cout << "Still Rozdil";
-else cout << minIndex;
-```
+To find \( x \):
+\[
+x = \sqrt{\frac{S1 \times S3}{S2}}
+\]
 
----
+To find \( y \):
+\[
+y = \sqrt{\frac{S1 \times S2}{S3}}
+\]
 
-## Problem 16: Magic Numbers
+To find \( z \):
+\[
+z = \sqrt{\frac{S2 \times S3}{S1}}
+\]
 
-**Image:**  
-![Problem 16](image/q16.png)
+**Step 4:** Calculate total sum of edges
+\[
+\text{Answer} = 4 \times (x + y + z)
+\]
 
-**Brief Restatement:**  
-Check if number can be formed by concatenating "1", "14", "144".
 
-**Solution Approach:**  
-- Traverse string, check prefixes "144", "14", "1"
+### 3. Time & Space Complexity
 
-**Code Snippet:**  
-```cpp
-int i = 0;
-while (i < s.length()) {
-    if (s.substr(i, 3) == "144") i += 3;
-    else if (s.substr(i, 2) == "14") i += 2;
-    else if (s[i] == '1') i += 1;
-    else { cout << "NO"; return 0; }
-}
-cout << "YES";
-```
-
----
-
-## Problem 17: Football
-
-**Image:**  
-![Problem 17](image/q17.png)
-
-**Brief Restatement:**  
-Given list of goals, find winning team (more goals).
-
-**Solution Approach:**  
-- Count occurrences of each team using map  
-- Find max
-
-**Code Snippet:**  
-```cpp
-map<string, int> goals;
-for (int i = 0; i < n; i++) {
-    string team; cin >> team;
-    goals[team]++;
-}
-string winner;
-int maxGoals = 0;
-for (auto &p : goals) {
-    if (p.second > maxGoals) {
-        maxGoals = p.second;
-        winner = p.first;
-    }
-}
-cout << winner;
-```
-
----
-
-## Problem 18: Little Elephant and Function
-
-**Image:**  
-![Problem 18](image/q18.png)
-
-**Brief Restatement:**  
-Find permutation that becomes sorted after given recursive swap function.
-
-**Solution Approach:**  
-- Function moves first element to end  
-- Place n first, then 1,2,...,n-1
-
-**Code Snippet:**  
-```cpp
-cout << n;
-for (int i = 1; i < n; i++) cout << " " << i;
-```
-
----
-
-## Problem 19: Jeff and Periods
-
-**Image:**  
-![Problem 19](image/q19.png)
-
-**Brief Restatement:**  
-For each value x, check if its occurrence positions form arithmetic progression.
-
-**Solution Approach:**  
-- Track last position and diff for each x  
-- Validate on each new occurrence
-
-**Code Snippet:**  
-```cpp
-vector<int> lastPos(MAX, -1), diff(MAX, 0);
-vector<bool> valid(MAX, true);
-for (int i = 1; i <= n; i++) {
-    int x; cin >> x;
-    if (lastPos[x] == -1) lastPos[x] = i;
-    else if (diff[x] == 0) {
-        diff[x] = i - lastPos[x];
-        lastPos[x] = i;
-    } else {
-        if (i - lastPos[x] != diff[x]) valid[x] = false;
-        lastPos[x] = i;
-    }
-}
-```
-
----
-
-## Problem 20: Little Girl and Game
-
-**Image:**  
-![Problem 20](image/q20.png)
-
-**Brief Restatement:**  
-Determine winner if players remove letters to form palindrome, playing optimally.
-
-**Solution Approach:**  
-- Count characters with odd frequency  
-- If odd == 0 or odd % 2 == 1 → First wins, else Second wins
-
-**Code Snippet:**  
-```cpp
-int freq[26] = {0};
-for (char c : s) freq[c - 'a']++;
-int odd = 0;
-for (int i = 0; i < 26; i++) if (freq[i] % 2 == 1) odd++;
-if (odd == 0 || odd % 2 == 1) cout << "First";
-else cout << "Second";
-```
-
----
-
-## Problem 21: Shooshuns and Sequence
-
-**Image:**  
-![Problem 21](image/q21.png)
-
-**Brief Restatement:**  
-Find minimum operations to make sequence uniform by copying k-th element to end and deleting first.
-
-**Solution Approach:**  
-- Check if elements from k to n are identical  
-- If yes, count mismatches from start until k
-
-**Code Snippet:**  
-```cpp
-bool uniform = true;
-for (int i = k; i < n; i++) {
-    if (a[i] != a[k-1]) { uniform = false; break; }
-}
-if (!uniform) cout << -1;
-else {
-    int ans = k-1;
-    for (int i = k-2; i >= 0; i--) {
-        if (a[i] != a[k-1]) break;
-        ans--;
-    }
-    cout << ans;
-}
-```
-```
+- **Time Complexity:** O(1) — only a fixed number of arithmetic operations
+- **Space Complexity:** O(1) — only a few variables
