@@ -40,8 +40,6 @@ Manacher's was the most interesting. The `#` separator trick unifies odd and eve
 
 ### What Was Missed
 
-### What Was Missed
-
 - PATRICIA checks bits instead of characters, which was not intuitive at first
 - Back-links in PATRICIA were confusing, unclear why the search loops back instead of stopping
 - Manacher's reuse of mirror values was not immediately obvious
